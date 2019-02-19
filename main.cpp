@@ -35,21 +35,21 @@ bool AboveOK(bool** maze, int x, int y) {
 // Returns the number of ways to get from the top-left corner to the
 // bottom-right corner of <maze> assuming you can only go right or down.
 int CountPaths(bool** maze, int cols, int rows) {
-	int dp[cols][rows];
+    if (!maze[0][0] || !maze[cols - 1][rows - 1])
+        return 0;  // Source or Destination is unaccessible.
+    int dp[cols][rows];
 	for (int i = 0; i < cols; i++) {
 		for (int j = 0; j < rows; j++) {
-			if (i == 0 && j == 0)
-                if (maze[0][0] == false)
-                    dp[0][0] = 0;
-                else
-				    dp[0][0] = 1;
-			else if (AboveOK(maze, i, j) && LeftOK(maze, i, j))
+			if (AboveOK(maze, i, j) && LeftOK(maze, i, j))
 				dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
 			else if (AboveOK(maze, i, j))
 				dp[i][j] = dp[i][j - 1];
 			else if (LeftOK(maze, i, j))
 				dp[i][j] = dp[i - 1][j];
-			else  // This tile is unaccessible.
+            else if (i == 0 && j == 0) {
+                // Source is accessible despite no left or above tiles
+                dp[i][j] = 1;
+            } else  // This tile is unaccessible.
 				dp[i][j] = 0;
 		}
 	}
