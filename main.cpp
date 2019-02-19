@@ -39,7 +39,10 @@ int CountPaths(bool** maze, int cols, int rows) {
 	for (int i = 0; i < cols; i++) {
 		for (int j = 0; j < rows; j++) {
 			if (i == 0 && j == 0)
-				dp[i][j] = 1;
+                if (maze[0][0] == false)
+                    dp[0][0] = 0;
+                else
+				    dp[0][0] = 1;
 			else if (AboveOK(maze, i, j) && LeftOK(maze, i, j))
 				dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
 			else if (AboveOK(maze, i, j))
@@ -69,6 +72,7 @@ int main() {
     
     // Add maze blocks here if desired.
     maze[2][1] = false;
+    maze[2][2] = false;
 
     PrintMaze(maze, cols, rows);
     std::cout << "Paths: " << CountPaths(maze, cols, rows)
