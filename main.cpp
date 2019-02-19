@@ -38,22 +38,22 @@ int CountPaths(bool** maze, int cols, int rows) {
     if (!maze[0][0] || !maze[cols - 1][rows - 1])
         return 0;  // Source or Destination is unaccessible.
     int dp[cols][rows];
-	for (int i = 0; i < cols; i++) {
-		for (int j = 0; j < rows; j++) {
-			if (AboveOK(maze, i, j) && LeftOK(maze, i, j))
-				dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
-			else if (AboveOK(maze, i, j))
-				dp[i][j] = dp[i][j - 1];
-			else if (LeftOK(maze, i, j))
-				dp[i][j] = dp[i - 1][j];
+  for (int i = 0; i < cols; i++) {
+    for (int j = 0; j < rows; j++) {
+      if (AboveOK(maze, i, j) && LeftOK(maze, i, j))
+        dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+      else if (AboveOK(maze, i, j))
+        dp[i][j] = dp[i][j - 1];
+      else if (LeftOK(maze, i, j))
+          dp[i][j] = dp[i - 1][j];
             else if (i == 0 && j == 0) {
                 // Source is accessible despite no left or above tiles
                 dp[0][0] = 1;
             } else  // This tile is unaccessible.
-				dp[i][j] = 0;
-		}
-	}
-	return dp[cols-1][rows-1];
+                dp[i][j] = 0;
+    }
+  }
+  return dp[cols-1][rows-1];
 }
 
 int main() {
@@ -72,7 +72,7 @@ int main() {
     
     // Add maze blocks here if desired.
     maze[1][1] = false;
-    maze[3][2] = false;
+    maze[3][1] = false;
 
     PrintMaze(maze, cols, rows);
     std::cout << "Paths: " << CountPaths(maze, cols, rows)
